@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysEmailConfigMapper">
+    
+    <resultMap type="SysEmailConfig" id="SysEmailConfigResult">
+        <result property="id"    column="id"    />
+        <result property="smtpCom"    column="smtp_com"    />
+        <result property="sendEmailAddress"    column="send_email_address"    />
+        <result property="reciveEmailAdress"    column="recive_email_adress"    />
+        <result property="theme"    column="theme"    />
+        <result property="emailType"    column="email_type"    />
+        <result property="content"    column="content"    />
+        <result property="enclosureName"    column="enclosure_name"    />
+        <result property="fileAdress"    column="file_adress"    />
+    </resultMap>
+
+    <sql id="selectSysEmailConfigVo">
+        select id, smtp_com, send_email_address, recive_email_adress, theme, email_type, content, enclosure_name, file_adress from sys_email_config
+    </sql>
+
+    <select id="selectSysEmailConfigList" parameterType="SysEmailConfig" resultMap="SysEmailConfigResult">
+        <include refid="selectSysEmailConfigVo"/>
+        <where>  
+            <if test="smtpCom != null  and smtpCom != ''"> and smtp_com = #{smtpCom}</if>
+            <if test="sendEmailAddress != null  and sendEmailAddress != ''"> and send_email_address = #{sendEmailAddress}</if>
+            <if test="reciveEmailAdress != null  and reciveEmailAdress != ''"> and recive_email_adress = #{reciveEmailAdress}</if>
+            <if test="theme != null  and theme != ''"> and theme = #{theme}</if>
+            <if test="emailType != null  and emailType != ''"> and email_type = #{emailType}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="enclosureName != null  and enclosureName != ''"> and enclosure_name like concat('%', #{enclosureName}, '%')</if>
+            <if test="fileAdress != null  and fileAdress != ''"> and file_adress = #{fileAdress}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysEmailConfigById" parameterType="Long" resultMap="SysEmailConfigResult">
+        <include refid="selectSysEmailConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysEmailConfig" parameterType="SysEmailConfig">
+        insert into sys_email_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="smtpCom != null  and smtpCom != ''">smtp_com,</if>
+            <if test="sendEmailAddress != null  and sendEmailAddress != ''">send_email_address,</if>
+            <if test="reciveEmailAdress != null  and reciveEmailAdress != ''">recive_email_adress,</if>
+            <if test="theme != null  and theme != ''">theme,</if>
+            <if test="emailType != null  and emailType != ''">email_type,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="enclosureName != null  and enclosureName != ''">enclosure_name,</if>
+            <if test="fileAdress != null  and fileAdress != ''">file_adress,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="smtpCom != null  and smtpCom != ''">#{smtpCom},</if>
+            <if test="sendEmailAddress != null  and sendEmailAddress != ''">#{sendEmailAddress},</if>
+            <if test="reciveEmailAdress != null  and reciveEmailAdress != ''">#{reciveEmailAdress},</if>
+            <if test="theme != null  and theme != ''">#{theme},</if>
+            <if test="emailType != null  and emailType != ''">#{emailType},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="enclosureName != null  and enclosureName != ''">#{enclosureName},</if>
+            <if test="fileAdress != null  and fileAdress != ''">#{fileAdress},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysEmailConfig" parameterType="SysEmailConfig">
+        update sys_email_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="smtpCom != null  and smtpCom != ''">smtp_com = #{smtpCom},</if>
+            <if test="sendEmailAddress != null  and sendEmailAddress != ''">send_email_address = #{sendEmailAddress},</if>
+            <if test="reciveEmailAdress != null  and reciveEmailAdress != ''">recive_email_adress = #{reciveEmailAdress},</if>
+            <if test="theme != null  and theme != ''">theme = #{theme},</if>
+            <if test="emailType != null  and emailType != ''">email_type = #{emailType},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="enclosureName != null  and enclosureName != ''">enclosure_name = #{enclosureName},</if>
+            <if test="fileAdress != null  and fileAdress != ''">file_adress = #{fileAdress},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysEmailConfigById" parameterType="Long">
+        delete from sys_email_config where id = #{id}
+    </delete>
+
+    <delete id="deleteSysEmailConfigByIds" parameterType="String">
+        delete from sys_email_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+</mapper>

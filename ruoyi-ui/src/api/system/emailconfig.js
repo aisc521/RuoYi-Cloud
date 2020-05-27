@@ -1,60 +1,53 @@
 import request from '@/utils/request'
 
 // 查询【请填写功能名称】列表
-export function listNurse(query) {
+export function listConfig(query) {
   return request({
-    url: '/system/nurse/list',
+    url: '/system/email/list',
     method: 'get',
     params: query
   })
 }
 
 // 查询【请填写功能名称】详细
-export function getNurse(id) {
+export function getConfig(id) {
   return request({
-    url: '/system/nurse/' + id,
+    url: '/system/email/' + id,
     method: 'get'
   })
 }
 
 // 新增【请填写功能名称】
-export function addNurse(data) {
+export function addConfig(data) {
   return request({
-    url: '/system/nurse',
+    url: '/system/email',
     method: 'post',
     data: data
   })
 }
 
 // 修改【请填写功能名称】
-export function updateNurse(data) {
+export function updateConfig(data) {
   return request({
-    url: '/system/nurse',
+    url: '/system/email',
     method: 'put',
     data: data
   })
 }
 
 // 删除【请填写功能名称】
-export function delNurse(id) {
+export function delConfig(id) {
   return request({
-    url: '/system/nurse/' + id,
+    url: '/system/email/' + id,
     method: 'delete'
   })
 }
 
 // 导出【请填写功能名称】
-export function exportNurse(query) {
+export function exportConfig(query) {
   return request({
-    url: '/system/nurse/export',
+    url: '/system/email/export',
     method: 'get',
     params: query
-  })
-}
-
-export function addNurseDk(data) {
-  return request({
-    url: '/system/nurseDk/godaka/' + data.ntype,
-    method: 'post'
   })
 }

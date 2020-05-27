@@ -120,4 +120,5 @@ public class SysConfigController extends BaseController
     {
         return toAjax(configService.deleteConfigByIds(configIds));
     }
+
 }

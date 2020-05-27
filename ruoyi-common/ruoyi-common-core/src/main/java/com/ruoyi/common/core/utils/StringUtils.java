@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.utils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import com.ruoyi.common.core.text.StrFormatter;
 
@@ -401,4 +402,26 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
     {
         return (T) obj;
     }
+
+    /**
+     * 将list用,连接
+     * @param list
+     * @return
+     */
+
+    public static String listToString1(List<Object> list,String join) {
+        StringBuilder sb = new StringBuilder();
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1) {
+                    sb.append(list.get(i) + join);
+                } else {
+                    sb.append(list.get(i));
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
 }
