@@ -77,9 +77,9 @@ public class SysNurseController extends BaseController
         return AjaxResult.success(sysNurseService.selectSysNurseById(id));
     }
 
-    /**
+   /* *//**
      * 新增【宝妈打卡】
-     */
+     *//*
     @PreAuthorize("@ss.hasPermi('system:nurse:add')")
     @Log(title = "【宝妈打卡】", businessType = BusinessType.INSERT)
     @PostMapping
@@ -92,7 +92,7 @@ public class SysNurseController extends BaseController
         }
         return AjaxResult.error("还有未结束的任务，请先结束，在开始新的任务");
 
-    }
+    }*/
 
     /**
      * 修改【宝妈打卡】

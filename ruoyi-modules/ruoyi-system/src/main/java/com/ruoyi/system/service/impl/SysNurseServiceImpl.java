@@ -1,5 +1,7 @@
 package com.ruoyi.system.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,8 @@ import javax.mail.MessagingException;
 @Service
 public class SysNurseServiceImpl implements ISysNurseService 
 {
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//注意月份是MM
     @Autowired
     private SysNurseMapper sysNurseMapper;
 
@@ -70,11 +74,9 @@ public class SysNurseServiceImpl implements ISysNurseService
      * @return 结果
      */
     @Override
-    public int insertSysNurse(SysNurse sysNurse)
-    {
+    public int insertSysNurse(SysNurse sysNurse,String startDate,String startTime) throws ParseException {
         Long userId = SecurityUtils.getLoginUser().getUserId();
         Date nowDate = new Date();
-
         SysNurse sysNursequery = new SysNurse();
         sysNursequery.setUserid(userId);
         if("2".equals(sysNurse.getNtype())){
@@ -89,10 +91,25 @@ public class SysNurseServiceImpl implements ISysNurseService
         if("3".equals(sysNurse.getNtype())){
             sysNursequery.setNtype("1");
         }
+        if(!"undefined".equals(startDate) && !"undefined".equals(startTime)){
+            String Date = startDate + " " + startTime;
+
+            Date date = simpleDateFormat.parse(Date);
+
+            sysNurse.setNowtime(date);
+        }else{
+            sysNurse.setNowtime(nowDate);
+        }
         SysNurse sysNurse1 = sysNurseMapper.selectSysNurseByIdFroLastInfo(sysNursequery);
         if(sysNurse1 != null){
             sysNurse.setBeforetime(sysNurse1.getNowtime());
-            sysNurse.setNinterval(DateUtils.getDatePoor(nowDate,sysNurse1.getNowtime()));
+            if(!"undefined".equals(startDate) && !"undefined".equals(startTime)){
+                String Date = startDate + " " + startTime;
+                Date date = simpleDateFormat.parse(Date);
+                sysNurse.setNinterval(DateUtils.getDatePoor(date,sysNurse1.getNowtime()));
+            }else{
+                sysNurse.setNinterval(DateUtils.getDatePoor(nowDate,sysNurse1.getNowtime()));
+            }
             if("2".equals(sysNurse.getNtype()) || "3".equals(sysNurse.getNtype())){
                 sysNurse1.setIsEnd(Long.valueOf(0));
                 sysNurseMapper.updateSysNurse(sysNurse1);
@@ -104,13 +121,11 @@ public class SysNurseServiceImpl implements ISysNurseService
             sysNurse.setIsEnd(Long.valueOf(1));
         }
         sysNurse.setUserid(userId);
-        sysNurse.setNowtime(nowDate);
         try {
             babyEmailSend(userId,sysNurse.getNtype());
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         return sysNurseMapper.insertSysNurse(sysNurse);
     }
 
@@ -159,6 +174,14 @@ public class SysNurseServiceImpl implements ISysNurseService
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<SysNurseVo> selectSysNurseListLast() {
+        Long userId = SecurityUtils.getLoginUser().getUserId();
+        SysNurse sysNurse = new SysNurse();
+        sysNurse.setUserid(userId);
+        return sysNurseMapper.selectSysNurseListLast(sysNurse);
     }
 
 

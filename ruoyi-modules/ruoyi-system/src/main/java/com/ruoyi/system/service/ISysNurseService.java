@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import java.text.ParseException;
 import java.util.List;
 import com.ruoyi.system.domain.SysNurse;
 import com.ruoyi.system.domain.vo.SysNurseVo;
@@ -34,7 +35,7 @@ public interface ISysNurseService
      * @param sysNurse 【请填写功能名称】
      * @return 结果
      */
-    public int insertSysNurse(SysNurse sysNurse);
+    public int insertSysNurse(SysNurse sysNurse,String startDate,String startTime) throws ParseException;
 
     /**
      * 修改【请填写功能名称】
@@ -66,4 +67,6 @@ public interface ISysNurseService
      * @return
      */
     boolean checkAdd(SysNurse sysNurse);
+
+    List<SysNurseVo> selectSysNurseListLast();
 }

@@ -53,8 +53,17 @@ export function exportNurse(query) {
 }
 
 export function addNurseDk(data) {
+  console.log('/system/nurseDk/godaka/' + data.ntype +"/" +data.startDate + "/" +data.startTime)
   return request({
-    url: '/system/nurseDk/godaka/' + data.ntype,
+    url: '/system/nurseDk/godaka/' + data.ntype +"/" +data.startDate + "/" +data.startTime,
     method: 'post'
+  })
+}
+
+export function listNurseForDk(query) {
+  return request({
+    url: '/system/nurseDk/list',
+    method: 'get',
+    params: query
   })
 }

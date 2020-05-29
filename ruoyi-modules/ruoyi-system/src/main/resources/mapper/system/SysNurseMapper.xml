@@ -92,4 +92,9 @@
 
 
     </select>
+    <select id="selectSysNurseListLast" parameterType="SysNurse" resultMap="SysNurseResult">
+         select * from sys_nurse
+              where userid = #{userid}
+              order by nowTime desc LIMIT 1
+    </select>
 </mapper>

@@ -63,4 +63,6 @@ public interface SysNurseMapper
     SysNurse selectSysNurseByIdFroLastInfo(SysNurse sysNurse);
 
     SysNurse checkAdd(SysNurse sysNurse);
+
+    List<SysNurseVo> selectSysNurseListLast(SysNurse sysNurse);
 }
