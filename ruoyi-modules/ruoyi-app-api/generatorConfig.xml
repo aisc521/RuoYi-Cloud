@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <property name="javaFileEncoding" value="UTF-8"/>
+
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <!--数据库连接信息 -->
+    <jdbcConnection
+      driverClass="com.mysql.jdbc.Driver"
+      connectionURL="jdbc:mysql://rm-2zew94n065b12u8lrjo.mysql.rds.aliyuncs.com:3306/ry-cloud?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;requireSSL=false&amp;verifyServerCertificate=false"
+      userId="aisc"
+      password="Aisc@123">
+    </jdbcConnection>
+
+    <javaModelGenerator targetPackage="com.ruoyi.api.db.model" targetProject="src/main/java"/>
+
+    <sqlMapGenerator targetPackage="api" targetProject="src/main/resources"/>
+
+    <javaClientGenerator targetPackage="com.ruoyi.api.db.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
+
+    <table tableName="sys_user"/>
+  </context>
+</generatorConfiguration>

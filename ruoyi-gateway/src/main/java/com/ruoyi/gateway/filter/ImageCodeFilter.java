@@ -53,6 +53,7 @@ public class ImageCodeFilter extends AbstractGatewayFilterFactory
             {
                 return chain.filter(exchange);
             }
+
             try
             {
                 String[] clientInfos = WebUtils.getClientId(request);

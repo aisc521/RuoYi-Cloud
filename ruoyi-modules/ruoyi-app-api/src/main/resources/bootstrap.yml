@@ -1,12 +1,12 @@
 # Tomcat
 server:
-  port: 8080
+  port: 9204
 
 # Spring
 spring: 
   application:
     # 应用名称
-    name: ruoyi-gateway
+    name: ruoyi-api
   profiles:
     # 环境配置
     active: dev
@@ -24,3 +24,5 @@ spring:
         file-extension: yml
         # 共享配置
         shared-dataids: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+
