@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntDeployMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntDeploy" id="MntDeployResult">
+        <result property="deployId"    column="deploy_id"    />
+        <result property="appId"    column="app_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectMntDeployVo">
+        select deploy_id, app_id, create_by, update_by, create_time, update_time from mnt_deploy
+    </sql>
+
+    <select id="selectMntDeployList" parameterType="com.ruoyi.maintenance.domain.MntDeploy" resultType="com.ruoyi.maintenance.domain.MntDeployDto">
+     select
+        m.deploy_id deployId,
+        a.`name`appName,
+        s.`name` serverName,
+        m.create_time createDate
+        from mnt_deploy m
+        left join mnt_deploy_server n on m.deploy_id = n.deploy_id
+        left join mnt_server s on n.server_id = s.server_id
+        left join mnt_app a on m.app_id = a.app_id
+        where 1= 1
+
+    </select>
+    
+    <select id="selectMntDeployById" parameterType="Long" resultMap="MntDeployResult">
+        <include refid="selectMntDeployVo"/>
+        where deploy_id = #{deployId}
+    </select>
+        
+    <insert id="insertMntDeploy" parameterType="com.ruoyi.maintenance.domain.MntDeploy" useGeneratedKeys="true" keyProperty="deployId">
+        insert into mnt_deploy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null ">app_id,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null ">#{appId},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntDeploy" parameterType="com.ruoyi.maintenance.domain.MntDeploy">
+        update mnt_deploy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appId != null ">app_id = #{appId},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where deploy_id = #{deployId}
+    </update>
+
+    <delete id="deleteMntDeployById" parameterType="Long">
+        delete from mnt_deploy where deploy_id = #{deployId}
+    </delete>
+
+    <delete id="deleteMntDeployByIds" parameterType="String">
+        delete from mnt_deploy where deploy_id in 
+        <foreach item="deployId" collection="array" open="(" separator="," close=")">
+            #{deployId}
+        </foreach>
+    </delete>
+    
+</mapper>

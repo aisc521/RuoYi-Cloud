@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntServerMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntServer" id="MntServerResult">
+        <result property="serverId"    column="server_id"    />
+        <result property="account"    column="account"    />
+        <result property="ip"    column="ip"    />
+        <result property="name"    column="name"    />
+        <result property="password"    column="password"    />
+        <result property="port"    column="port"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectMntServerVo">
+        select server_id, account, ip, name, password, port, create_by, update_by, create_time, update_time from mnt_server
+    </sql>
+
+    <select id="selectMntServerList" parameterType="com.ruoyi.maintenance.domain.MntServer" resultMap="MntServerResult">
+        <include refid="selectMntServerVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="port != null "> and port = #{port}</if>
+        </where>
+    </select>
+    
+    <select id="selectMntServerById" parameterType="Long" resultMap="MntServerResult">
+        <include refid="selectMntServerVo"/>
+        where server_id = #{serverId}
+    </select>
+        
+    <insert id="insertMntServer" parameterType="com.ruoyi.maintenance.domain.MntServer" useGeneratedKeys="true" keyProperty="serverId">
+        insert into mnt_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="account != null  and account != ''">account,</if>
+            <if test="ip != null  and ip != ''">ip,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="password != null  and password != ''">password,</if>
+            <if test="port != null ">port,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="ip != null  and ip != ''">#{ip},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+            <if test="port != null ">#{port},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntServer" parameterType="com.ruoyi.maintenance.domain.MntServer">
+        update mnt_server
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="ip != null  and ip != ''">ip = #{ip},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="port != null ">port = #{port},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where server_id = #{serverId}
+    </update>
+
+    <delete id="deleteMntServerById" parameterType="Long">
+        delete from mnt_server where server_id = #{serverId}
+    </delete>
+
+    <delete id="deleteMntServerByIds" parameterType="String">
+        delete from mnt_server where server_id in 
+        <foreach item="serverId" collection="array" open="(" separator="," close=")">
+            #{serverId}
+        </foreach>
+    </delete>
+
+    <select id="queryAll"  resultMap="MntServerResult">
+        <include refid="selectMntServerVo"/>
+       where 1 = 1
+    </select>
+
+    <select id="findByIp"  parameterType="java.lang.String" resultType="com.ruoyi.maintenance.domain.ServerDeployDto">
+
+       select
+       a.server_id id,
+       a.name name,
+       a.ip ip,
+       a.port port,
+       a.account account,
+       a.password password
+       from mnt_server a where a.ip = #{ip}
+
+    </select>
+
+
+    <select id="selectServerDeploybyId"  parameterType="java.lang.Long" resultType="com.ruoyi.maintenance.domain.ServerDeploy">
+
+       select
+       a.server_id id,
+       a.name name,
+       a.ip ip,
+       a.port port,
+       a.account account,
+       a.password password
+       from mnt_server a where a.server_id = #{serverId}
+
+    </select>
+
+</mapper>

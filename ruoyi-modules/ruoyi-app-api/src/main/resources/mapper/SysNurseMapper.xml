@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.api.db.mapper.SysNurseMapper" >
+  <resultMap id="BaseResultMap" type="com.ruoyi.api.db.model.SysNurse" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="nowTime" property="nowtime" jdbcType="TIMESTAMP" />
+    <result column="beforeTime" property="beforetime" jdbcType="TIMESTAMP" />
+    <result column="ntype" property="ntype" jdbcType="VARCHAR" />
+    <result column="ninterval" property="ninterval" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="isEnd" property="isend" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <select id="selectSysNurseList" parameterType = "java.lang.String" resultType="com.ruoyi.api.dto.SysNurseDto">
+     select id, DATE_FORMAT(nowTime,"%Y-%m-%d %H:%i:%s %p") nowTime, DATE_FORMAT(beforeTime,"%Y-%m-%d %H:%i:%s %p") beforeTime, ntype, ninterval, userid ,isEnd from sys_nurse
+     where userid = #{userId}
+      <if test="queryType!=null and queryType!='' and queryType == 0">
+          and ntype in ('0','2')
+      </if >
+      <if test="queryType!=null and queryType!='' and queryType == 1">
+          and ntype in ('1','3')
+      </if >
+    order by nowTime desc LIMIT 10
+  </select>
+
+  <select id="checkAdd" parameterType="com.ruoyi.api.db.model.SysNurse" resultType="com.ruoyi.api.dto.SysNurseDto">
+           select id, DATE_FORMAT(nowTime,"%Y-%m-%d %H:%i:%s %p") nowTime, DATE_FORMAT(beforeTime,"%Y-%m-%d %H:%i:%s %p") beforeTime, ntype, ninterval, userid ,isEnd from sys_nurse
+              where userid = #{userid} and isEnd = '1' and ntype = #{ntype}
+
+
+  </select>
+    <select id="selectSysNurseByIdFroLastInfo" parameterType="com.ruoyi.api.db.model.SysNurse" resultMap="BaseResultMap">
+          select * from sys_nurse
+              where userid = #{userid} and ntype = #{ntype}
+              order by nowTime desc LIMIT 1
+
+    </select>
+
+    <update id="updateSysNurse" parameterType="com.ruoyi.api.db.model.SysNurse">
+        update sys_nurse
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nowtime != null ">nowTime = #{nowtime},</if>
+            <if test="beforetime != null ">beforeTime = #{beforetime},</if>
+            <if test="ntype != null  and ntype != ''">ntype = #{ntype},</if>
+            <if test="ninterval != null  and ninterval != ''">ninterval = #{ninterval},</if>
+            <if test="userid != null ">userid = #{userid},</if>
+            <if test="isend != null ">  isEnd = #{isend}</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="selentCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+            select count(*) from sys_nurse where userid = #{userid}
+    </select>
+
+    <insert id="insertSysNurse" parameterType="com.ruoyi.api.db.model.SysNurse" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_nurse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nowtime != null ">nowTime,</if>
+            <if test="beforetime != null ">beforeTime,</if>
+            <if test="ntype != null  and ntype != ''">ntype,</if>
+            <if test="ninterval != null  and ninterval != ''">ninterval,</if>
+            <if test="userid != null ">userid,</if>
+            <if test="isend != null "> isend,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nowtime != null ">#{nowtime},</if>
+            <if test="beforetime != null ">#{beforetime},</if>
+            <if test="ntype != null  and ntype != ''">#{ntype},</if>
+            <if test="ninterval != null  and ninterval != ''">#{ninterval},</if>
+            <if test="userid != null ">#{userid},</if>
+            <if test="isend != null "> #{isend},</if>
+        </trim>
+    </insert>
+    <select id="querySysNurseById" parameterType="com.ruoyi.api.db.model.SysNurse" resultType="com.ruoyi.api.dto.SysNurseDto">
+              select id, DATE_FORMAT(nowTime,"%Y-%m-%d %H:%i:%s %p") nowTime, DATE_FORMAT(beforeTime,"%Y-%m-%d %H:%i:%s %p") beforeTime, ntype, ninterval, userid ,isEnd from sys_nurse
+              where id = #{id}
+
+    </select>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sy.mapper.SyOrderDetileMapper">
+    
+    <resultMap type="com.ruoyi.sy.domain.SyOrderDetile" id="SyOrderDetileResult">
+        <result property="id"    column="id"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="orderName"    column="order_name"    />
+        <result property="orderSex"    column="order_sex"    />
+        <result property="orderBirthday"    column="order_birthday"    />
+        <result property="orderZodiac"    column="order_zodiac"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="orderFatherName"    column="order_father_name"    />
+        <result property="orderMotherName"    column="order_mother_name"    />
+        <result property="orderBsName"    column="order_bs_name"    />
+        <result property="wordsTao"    column="words_tao"    />
+        <result property="remark"    column="remark"    />
+        <result property="letteringNot"    column="lettering_not"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="jzSize"    column="jz_size"    />
+        <result property="orderId"    column="order_id"    />
+    </resultMap>
+
+    <sql id="selectSyOrderDetileVo">
+        select id, type_id, order_name, order_sex, order_birthday, order_zodiac, order_time, order_father_name, order_mother_name, order_bs_name, words_tao, remark, lettering_not, type_name, create_date, jz_size, order_id from sy_order_detile
+    </sql>
+
+    <select id="selectSyOrderDetileList" parameterType="com.ruoyi.sy.domain.SyOrderDetile" resultMap="SyOrderDetileResult">
+        <include refid="selectSyOrderDetileVo"/>
+        <where>  
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="orderName != null  and orderName != ''"> and order_name like concat('%', #{orderName}, '%')</if>
+            <if test="orderSex != null "> and order_sex = #{orderSex}</if>
+            <if test="orderBirthday != null "> and order_birthday = #{orderBirthday}</if>
+            <if test="orderZodiac != null  and orderZodiac != ''"> and order_zodiac = #{orderZodiac}</if>
+            <if test="orderTime != null  and orderTime != ''"> and order_time = #{orderTime}</if>
+            <if test="orderFatherName != null  and orderFatherName != ''"> and order_father_name like concat('%', #{orderFatherName}, '%')</if>
+            <if test="orderMotherName != null  and orderMotherName != ''"> and order_mother_name like concat('%', #{orderMotherName}, '%')</if>
+            <if test="orderBsName != null  and orderBsName != ''"> and order_bs_name like concat('%', #{orderBsName}, '%')</if>
+            <if test="wordsTao != null  and wordsTao != ''"> and words_tao = #{wordsTao}</if>
+            <if test="letteringNot != null "> and lettering_not = #{letteringNot}</if>
+            <if test="typeName != null  and typeName != ''"> and type_name like concat('%', #{typeName}, '%')</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="jzSize != null  and jzSize != ''"> and jz_size = #{jzSize}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSyOrderDetileById" parameterType="Long" resultMap="SyOrderDetileResult">
+        <include refid="selectSyOrderDetileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSyOrderDetile" parameterType="com.ruoyi.sy.domain.SyOrderDetile">
+        insert into sy_order_detile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="typeId != null ">type_id,</if>
+            <if test="orderName != null  and orderName != ''">order_name,</if>
+            <if test="orderSex != null ">order_sex,</if>
+            <if test="orderBirthday != null ">order_birthday,</if>
+            <if test="orderZodiac != null  and orderZodiac != ''">order_zodiac,</if>
+            <if test="orderTime != null  and orderTime != ''">order_time,</if>
+            <if test="orderFatherName != null  and orderFatherName != ''">order_father_name,</if>
+            <if test="orderMotherName != null  and orderMotherName != ''">order_mother_name,</if>
+            <if test="orderBsName != null  and orderBsName != ''">order_bs_name,</if>
+            <if test="wordsTao != null  and wordsTao != ''">words_tao,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="letteringNot != null ">lettering_not,</if>
+            <if test="typeName != null  and typeName != ''">type_name,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="jzSize != null  and jzSize != ''">jz_size,</if>
+            <if test="orderId != null ">order_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="typeId != null ">#{typeId},</if>
+            <if test="orderName != null  and orderName != ''">#{orderName},</if>
+            <if test="orderSex != null ">#{orderSex},</if>
+            <if test="orderBirthday != null ">#{orderBirthday},</if>
+            <if test="orderZodiac != null  and orderZodiac != ''">#{orderZodiac},</if>
+            <if test="orderTime != null  and orderTime != ''">#{orderTime},</if>
+            <if test="orderFatherName != null  and orderFatherName != ''">#{orderFatherName},</if>
+            <if test="orderMotherName != null  and orderMotherName != ''">#{orderMotherName},</if>
+            <if test="orderBsName != null  and orderBsName != ''">#{orderBsName},</if>
+            <if test="wordsTao != null  and wordsTao != ''">#{wordsTao},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="letteringNot != null ">#{letteringNot},</if>
+            <if test="typeName != null  and typeName != ''">#{typeName},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="jzSize != null  and jzSize != ''">#{jzSize},</if>
+            <if test="orderId != null ">#{orderId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyOrderDetile" parameterType="com.ruoyi.sy.domain.SyOrderDetile">
+        update sy_order_detile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeId != null ">type_id = #{typeId},</if>
+            <if test="orderName != null  and orderName != ''">order_name = #{orderName},</if>
+            <if test="orderSex != null ">order_sex = #{orderSex},</if>
+            <if test="orderBirthday != null ">order_birthday = #{orderBirthday},</if>
+            <if test="orderZodiac != null  and orderZodiac != ''">order_zodiac = #{orderZodiac},</if>
+            <if test="orderTime != null  and orderTime != ''">order_time = #{orderTime},</if>
+            <if test="orderFatherName != null  and orderFatherName != ''">order_father_name = #{orderFatherName},</if>
+            <if test="orderMotherName != null  and orderMotherName != ''">order_mother_name = #{orderMotherName},</if>
+            <if test="orderBsName != null  and orderBsName != ''">order_bs_name = #{orderBsName},</if>
+            <if test="wordsTao != null  and wordsTao != ''">words_tao = #{wordsTao},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="letteringNot != null ">lettering_not = #{letteringNot},</if>
+            <if test="typeName != null  and typeName != ''">type_name = #{typeName},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="jzSize != null  and jzSize != ''">jz_size = #{jzSize},</if>
+            <if test="orderId != null ">order_id = #{orderId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSyOrderDetileById" parameterType="Long">
+        delete from sy_order_detile where id = #{id}
+    </delete>
+
+    <delete id="deleteSyOrderDetileByIds" parameterType="String">
+        delete from sy_order_detile where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

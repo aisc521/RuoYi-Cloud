@@ -3,10 +3,10 @@ server:
   port: 9204
 
 # Spring
-spring: 
+spring:
   application:
     # 应用名称
-    name: ruoyi-api
+    name: ruoyi-api-my
   profiles:
     # 环境配置
     active: dev
@@ -18,11 +18,17 @@ spring:
         #server-addr: 127.0.0.1:8848
       config:
         # 配置中心地址
-        #server-addr: 106.13.130.241:8848
-        server-addr: 127.0.0.1:8848
+        server-addr: 106.13.130.241:8848
+        #server-addr: 127.0.0.1:8848
         # 配置文件格式
         file-extension: yml
         # 共享配置
         shared-dataids: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  redis:
+    host: 106.13.130.241
+    port: 6379
+    password: Aisc123
+    database: 0
+
 
 

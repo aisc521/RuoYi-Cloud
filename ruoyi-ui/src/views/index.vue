@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="dashboard-editor-container">
 
@@ -25,7 +26,7 @@
       </el-col>
     </el-row>
 
-    
+
   </div>
 </template>
 
@@ -96,3 +97,4 @@ export default {
   }
 }
 </style>
+-->

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">容溪后台管理系统</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -48,7 +48,10 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2019 ruoyi.vip All Rights Reserved.</span>
+      <span>
+        Copyright © 2018-2019 rongxi.vip All Rights Reserved.
+        <router-link to=''><button> ©2020 容溪小站 (京)-京ICP备19036708号-2</button></router-link>
+      </span>
     </div>
   </div>
 </template>
@@ -57,9 +60,11 @@
 import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
+import Link from "../layout/components/Sidebar/Link";
 
 export default {
   name: "Login",
+  components: {Link},
   data() {
     return {
       codeUrl: "",

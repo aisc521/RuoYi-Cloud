@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntAppMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntApp" id="MntAppResult">
+        <result property="appId"    column="app_id"    />
+        <result property="name"    column="name"    />
+        <result property="uploadPath"    column="upload_path"    />
+        <result property="deployPath"    column="deploy_path"    />
+        <result property="backupPath"    column="backup_path"    />
+        <result property="port"    column="port"    />
+        <result property="startScript"    column="start_script"    />
+        <result property="deployScript"    column="deploy_script"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectMntAppVo">
+        select app_id, name, upload_path, deploy_path, backup_path, port, start_script, deploy_script, create_by, update_by, create_time, update_time from mnt_app
+    </sql>
+
+    <select id="selectMntAppList" parameterType="com.ruoyi.maintenance.domain.MntApp" resultMap="MntAppResult">
+        <include refid="selectMntAppVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="uploadPath != null  and uploadPath != ''"> and upload_path = #{uploadPath}</if>
+            <if test="deployPath != null  and deployPath != ''"> and deploy_path = #{deployPath}</if>
+            <if test="backupPath != null  and backupPath != ''"> and backup_path = #{backupPath}</if>
+            <if test="port != null "> and port = #{port}</if>
+            <if test="startScript != null  and startScript != ''"> and start_script = #{startScript}</if>
+            <if test="deployScript != null  and deployScript != ''"> and deploy_script = #{deployScript}</if>
+        </where>
+    </select>
+    
+    <select id="selectMntAppById" parameterType="Long" resultMap="MntAppResult">
+        <include refid="selectMntAppVo"/>
+        where app_id = #{appId}
+    </select>
+        
+    <insert id="insertMntApp" parameterType="com.ruoyi.maintenance.domain.MntApp" useGeneratedKeys="true" keyProperty="appId">
+        insert into mnt_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="uploadPath != null  and uploadPath != ''">upload_path,</if>
+            <if test="deployPath != null  and deployPath != ''">deploy_path,</if>
+            <if test="backupPath != null  and backupPath != ''">backup_path,</if>
+            <if test="port != null ">port,</if>
+            <if test="startScript != null  and startScript != ''">start_script,</if>
+            <if test="deployScript != null  and deployScript != ''">deploy_script,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="uploadPath != null  and uploadPath != ''">#{uploadPath},</if>
+            <if test="deployPath != null  and deployPath != ''">#{deployPath},</if>
+            <if test="backupPath != null  and backupPath != ''">#{backupPath},</if>
+            <if test="port != null ">#{port},</if>
+            <if test="startScript != null  and startScript != ''">#{startScript},</if>
+            <if test="deployScript != null  and deployScript != ''">#{deployScript},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntApp" parameterType="com.ruoyi.maintenance.domain.MntApp">
+        update mnt_app
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="uploadPath != null  and uploadPath != ''">upload_path = #{uploadPath},</if>
+            <if test="deployPath != null  and deployPath != ''">deploy_path = #{deployPath},</if>
+            <if test="backupPath != null  and backupPath != ''">backup_path = #{backupPath},</if>
+            <if test="port != null ">port = #{port},</if>
+            <if test="startScript != null  and startScript != ''">start_script = #{startScript},</if>
+            <if test="deployScript != null  and deployScript != ''">deploy_script = #{deployScript},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where app_id = #{appId}
+    </update>
+
+    <delete id="deleteMntAppById" parameterType="Long">
+        delete from mnt_app where app_id = #{appId}
+    </delete>
+
+    <delete id="deleteMntAppByIds" parameterType="String">
+        delete from mnt_app where app_id in 
+        <foreach item="appId" collection="array" open="(" separator="," close=")">
+            #{appId}
+        </foreach>
+    </delete>
+    <select id="queryAll" parameterType="Long" resultMap="MntAppResult">
+        <include refid="selectMntAppVo"/>
+        where 1 = 1
+    </select>
+
+    <select id="selectMntAppByIdForApp" parameterType="Long" resultType="com.ruoyi.maintenance.domain.App">
+       select
+       a.app_id id,
+       a.name name,
+       a.port port,
+       a.upload_path uploadPath,
+       a.deploy_path deployPath,
+       a.backup_path backupPath,
+       a.start_script startScript,
+       a.deploy_script deployScript
+       from mnt_app a where a.app_id = #{appId}
+    </select>
+
+</mapper>

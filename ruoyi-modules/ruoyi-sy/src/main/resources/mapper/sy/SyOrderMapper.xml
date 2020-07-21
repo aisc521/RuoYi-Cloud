@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sy.mapper.SyOrderMapper">
+    
+    <resultMap type="com.ruoyi.sy.domain.SyOrder" id="SyOrderResult">
+        <result property="id"    column="id"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="guidanceTeacher"    column="guidance_teacher"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="serviceTeacher"    column="service_teacher"    />
+        <result property="userName"    column="user_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="cell"    column="cell"    />
+        <result property="address"    column="address"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="customTools"    column="custom_tools"    />
+        <result property="remark"    column="remark"    />
+        <result property="accountName"    column="account_name"    />
+        <result property="accountNumber"    column="account_number"    />
+    </resultMap>
+
+    <sql id="selectSyOrderVo">
+        select id, create_date, guidance_teacher, order_id, service_teacher, user_name, sex, cell, address, id_card, custom_tools, remark, account_name, account_number from sy_order
+    </sql>
+
+    <select id="selectSyOrderList" parameterType="com.ruoyi.sy.domain.SyOrder" resultMap="SyOrderResult">
+        <include refid="selectSyOrderVo"/>
+        <where>  
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="guidanceTeacher != null  and guidanceTeacher != ''"> and guidance_teacher = #{guidanceTeacher}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="serviceTeacher != null  and serviceTeacher != ''"> and service_teacher = #{serviceTeacher}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="cell != null  and cell != ''"> and cell = #{cell}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="customTools != null "> and custom_tools = #{customTools}</if>
+            <if test="accountName != null  and accountName != ''"> and account_name like concat('%', #{accountName}, '%')</if>
+            <if test="accountNumber != null "> and account_number = #{accountNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectSyOrderById" parameterType="Long" resultMap="SyOrderResult">
+        <include refid="selectSyOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSyOrder" parameterType="com.ruoyi.sy.domain.SyOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into sy_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createDate != null ">create_date,</if>
+            <if test="guidanceTeacher != null  and guidanceTeacher != ''">guidance_teacher,</if>
+            <if test="orderId != null  and orderId != ''">order_id,</if>
+            <if test="serviceTeacher != null  and serviceTeacher != ''">service_teacher,</if>
+            <if test="userName != null  and userName != ''">user_name,</if>
+            <if test="sex != null ">sex,</if>
+            <if test="cell != null  and cell != ''">cell,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="idCard != null  and idCard != ''">id_card,</if>
+            <if test="customTools != null ">custom_tools,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="accountName != null  and accountName != ''">account_name,</if>
+            <if test="accountNumber != null ">account_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="guidanceTeacher != null  and guidanceTeacher != ''">#{guidanceTeacher},</if>
+            <if test="orderId != null  and orderId != ''">#{orderId},</if>
+            <if test="serviceTeacher != null  and serviceTeacher != ''">#{serviceTeacher},</if>
+            <if test="userName != null  and userName != ''">#{userName},</if>
+            <if test="sex != null ">#{sex},</if>
+            <if test="cell != null  and cell != ''">#{cell},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="idCard != null  and idCard != ''">#{idCard},</if>
+            <if test="customTools != null ">#{customTools},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="accountName != null  and accountName != ''">#{accountName},</if>
+            <if test="accountNumber != null ">#{accountNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyOrder" parameterType="com.ruoyi.sy.domain.SyOrder">
+        update sy_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="guidanceTeacher != null  and guidanceTeacher != ''">guidance_teacher = #{guidanceTeacher},</if>
+            <if test="orderId != null  and orderId != ''">order_id = #{orderId},</if>
+            <if test="serviceTeacher != null  and serviceTeacher != ''">service_teacher = #{serviceTeacher},</if>
+            <if test="userName != null  and userName != ''">user_name = #{userName},</if>
+            <if test="sex != null ">sex = #{sex},</if>
+            <if test="cell != null  and cell != ''">cell = #{cell},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="idCard != null  and idCard != ''">id_card = #{idCard},</if>
+            <if test="customTools != null ">custom_tools = #{customTools},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="accountName != null  and accountName != ''">account_name = #{accountName},</if>
+            <if test="accountNumber != null ">account_number = #{accountNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSyOrderById" parameterType="Long">
+        delete from sy_order where id = #{id}
+    </delete>
+
+    <delete id="deleteSyOrderByIds" parameterType="String">
+        delete from sy_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

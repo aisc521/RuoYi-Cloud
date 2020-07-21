@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntDeployHistoryMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntDeployHistory" id="MntDeployHistoryResult">
+        <result property="historyId"    column="history_id"    />
+        <result property="appName"    column="app_name"    />
+        <result property="deployDate"    column="deploy_date"    />
+        <result property="deployUser"    column="deploy_user"    />
+        <result property="ip"    column="ip"    />
+        <result property="deployId"    column="deploy_id"    />
+    </resultMap>
+
+    <sql id="selectMntDeployHistoryVo">
+        select history_id, app_name, deploy_date, deploy_user, ip, deploy_id from mnt_deploy_history
+    </sql>
+
+    <select id="selectMntDeployHistoryList" parameterType="com.ruoyi.maintenance.domain.MntDeployHistory" resultMap="MntDeployHistoryResult">
+        <include refid="selectMntDeployHistoryVo"/>
+        <where>  
+            <if test="appName != null  and appName != ''"> and app_name like concat('%', #{appName}, '%')</if>
+            <if test="deployDate != null "> and deploy_date = #{deployDate}</if>
+            <if test="deployUser != null  and deployUser != ''"> and deploy_user = #{deployUser}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="deployId != null "> and deploy_id = #{deployId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMntDeployHistoryById" parameterType="String" resultMap="MntDeployHistoryResult">
+        <include refid="selectMntDeployHistoryVo"/>
+        where history_id = #{historyId}
+    </select>
+        
+    <insert id="insertMntDeployHistory" parameterType="com.ruoyi.maintenance.domain.MntDeployHistory">
+        insert into mnt_deploy_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="historyId != null  and historyId != ''">history_id,</if>
+            <if test="appName != null  and appName != ''">app_name,</if>
+            <if test="deployDate != null ">deploy_date,</if>
+            <if test="deployUser != null  and deployUser != ''">deploy_user,</if>
+            <if test="ip != null  and ip != ''">ip,</if>
+            <if test="deployId != null ">deploy_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="historyId != null  and historyId != ''">#{historyId},</if>
+            <if test="appName != null  and appName != ''">#{appName},</if>
+            <if test="deployDate != null ">#{deployDate},</if>
+            <if test="deployUser != null  and deployUser != ''">#{deployUser},</if>
+            <if test="ip != null  and ip != ''">#{ip},</if>
+            <if test="deployId != null ">#{deployId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntDeployHistory" parameterType="com.ruoyi.maintenance.domain.MntDeployHistory">
+        update mnt_deploy_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appName != null  and appName != ''">app_name = #{appName},</if>
+            <if test="deployDate != null ">deploy_date = #{deployDate},</if>
+            <if test="deployUser != null  and deployUser != ''">deploy_user = #{deployUser},</if>
+            <if test="ip != null  and ip != ''">ip = #{ip},</if>
+            <if test="deployId != null ">deploy_id = #{deployId},</if>
+        </trim>
+        where history_id = #{historyId}
+    </update>
+
+    <delete id="deleteMntDeployHistoryById" parameterType="String">
+        delete from mnt_deploy_history where history_id = #{historyId}
+    </delete>
+
+    <delete id="deleteMntDeployHistoryByIds" parameterType="String">
+        delete from mnt_deploy_history where history_id in 
+        <foreach item="historyId" collection="array" open="(" separator="," close=")">
+            #{historyId}
+        </foreach>
+    </delete>
+    <insert id="create" parameterType="com.ruoyi.maintenance.domain.MntDeployHistory">
+        insert into mnt_deploy_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="historyId != null  and historyId != ''">history_id,</if>
+            <if test="appName != null  and appName != ''">app_name,</if>
+            <if test="deployDate != null ">deploy_date,</if>
+            <if test="deployUser != null  and deployUser != ''">deploy_user,</if>
+            <if test="ip != null  and ip != ''">ip,</if>
+            <if test="deployId != null ">deploy_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="historyId != null  and historyId != ''">#{historyId},</if>
+            <if test="appName != null  and appName != ''">#{appName},</if>
+            <if test="deployDate != null ">#{deployDate},</if>
+            <if test="deployUser != null  and deployUser != ''">#{deployUser},</if>
+            <if test="ip != null  and ip != ''">#{ip},</if>
+            <if test="deployId != null ">#{deployId},</if>
+        </trim>
+    </insert>
+</mapper>

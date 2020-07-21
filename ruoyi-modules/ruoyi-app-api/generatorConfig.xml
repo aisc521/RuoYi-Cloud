@@ -26,6 +26,6 @@
 
     <javaClientGenerator targetPackage="com.ruoyi.api.db.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
 
-    <table tableName="sys_user"/>
+    <table tableName="sys_nurse"/>
   </context>
 </generatorConfiguration>

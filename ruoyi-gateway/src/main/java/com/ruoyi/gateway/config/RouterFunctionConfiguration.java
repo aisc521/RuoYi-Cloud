@@ -32,6 +32,8 @@ public class RouterFunctionConfiguration
                 .route(RequestPredicates.path("/fallback").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
                         hystrixFallbackHandler)
                 .andRoute(RequestPredicates.GET("/code").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
+                        imageCodeHandler)
+                .andRoute(RequestPredicates.GET("/api/code").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
                         imageCodeHandler);
     }
 

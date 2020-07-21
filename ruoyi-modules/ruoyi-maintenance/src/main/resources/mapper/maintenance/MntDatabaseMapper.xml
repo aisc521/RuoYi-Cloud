@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntDatabaseMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntDatabase" id="MntDatabaseResult">
+        <result property="dbId"    column="db_id"    />
+        <result property="name"    column="name"    />
+        <result property="jdbcUrl"    column="jdbc_url"    />
+        <result property="userName"    column="user_name"    />
+        <result property="pwd"    column="pwd"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectMntDatabaseVo">
+        select db_id, name, jdbc_url, user_name, pwd, create_by, update_by, create_time, update_time from mnt_database
+    </sql>
+
+    <select id="selectMntDatabaseList" parameterType="com.ruoyi.maintenance.domain.MntDatabase" resultMap="MntDatabaseResult">
+        <include refid="selectMntDatabaseVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="jdbcUrl != null  and jdbcUrl != ''"> and jdbc_url = #{jdbcUrl}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="pwd != null  and pwd != ''"> and pwd = #{pwd}</if>
+        </where>
+    </select>
+    
+    <select id="selectMntDatabaseById" parameterType="String" resultMap="MntDatabaseResult">
+        <include refid="selectMntDatabaseVo"/>
+        where db_id = #{dbId}
+    </select>
+        
+    <insert id="insertMntDatabase" parameterType="com.ruoyi.maintenance.domain.MntDatabase">
+        insert into mnt_database
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dbId != null  and dbId != ''">db_id,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="jdbcUrl != null  and jdbcUrl != ''">jdbc_url,</if>
+            <if test="userName != null  and userName != ''">user_name,</if>
+            <if test="pwd != null  and pwd != ''">pwd,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dbId != null  and dbId != ''">#{dbId},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="jdbcUrl != null  and jdbcUrl != ''">#{jdbcUrl},</if>
+            <if test="userName != null  and userName != ''">#{userName},</if>
+            <if test="pwd != null  and pwd != ''">#{pwd},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntDatabase" parameterType="com.ruoyi.maintenance.domain.MntDatabase">
+        update mnt_database
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="jdbcUrl != null  and jdbcUrl != ''">jdbc_url = #{jdbcUrl},</if>
+            <if test="userName != null  and userName != ''">user_name = #{userName},</if>
+            <if test="pwd != null  and pwd != ''">pwd = #{pwd},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where db_id = #{dbId}
+    </update>
+
+    <delete id="deleteMntDatabaseById" parameterType="String">
+        delete from mnt_database where db_id = #{dbId}
+    </delete>
+
+    <delete id="deleteMntDatabaseByIds" parameterType="String">
+        delete from mnt_database where db_id in 
+        <foreach item="dbId" collection="array" open="(" separator="," close=")">
+            #{dbId}
+        </foreach>
+    </delete>
+    
+</mapper>

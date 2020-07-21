@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.maintenance.mapper.MntDeployServerMapper">
+    
+    <resultMap type="com.ruoyi.maintenance.domain.MntDeployServer" id="MntDeployServerResult">
+        <result property="deployId"    column="deploy_id"    />
+        <result property="serverId"    column="server_id"    />
+    </resultMap>
+
+    <sql id="selectMntDeployServerVo">
+        select deploy_id, server_id from mnt_deploy_server
+    </sql>
+
+    <select id="selectMntDeployServerList" parameterType="com.ruoyi.maintenance.domain.MntDeployServer" resultMap="MntDeployServerResult">
+        <include refid="selectMntDeployServerVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectMntDeployServerById" parameterType="Long" resultMap="MntDeployServerResult">
+        <include refid="selectMntDeployServerVo"/>
+        where deploy_id = #{deployId}
+    </select>
+        
+    <insert id="insertMntDeployServer" parameterType="com.ruoyi.maintenance.domain.MntDeployServer">
+        insert into mnt_deploy_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deployId != null ">deploy_id,</if>
+            <if test="serverId != null ">server_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deployId != null ">#{deployId},</if>
+            <if test="serverId != null ">#{serverId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMntDeployServer" parameterType="com.ruoyi.maintenance.domain.MntDeployServer">
+        update mnt_deploy_server
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serverId != null ">server_id = #{serverId},</if>
+        </trim>
+        where deploy_id = #{deployId}
+    </update>
+
+    <delete id="deleteMntDeployServerById" parameterType="Long">
+        delete from mnt_deploy_server where deploy_id = #{deployId}
+    </delete>
+
+    <delete id="deleteMntDeployServerByIds" parameterType="String">
+        delete from mnt_deploy_server where deploy_id in 
+        <foreach item="deployId" collection="array" open="(" separator="," close=")">
+            #{deployId}
+        </foreach>
+    </delete>
+    
+</mapper>
